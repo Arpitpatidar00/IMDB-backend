@@ -18,7 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Define allowed origins
-const allowedOrigins = ['http://localhost:3000']; // Add your allowed origins here
+const allowedOrigins = ['https://main--clone-amenses-i-m-d-b.netlify.app']; // Add your allowed origins here
 
 // Configure CORS middleware
 app.use(cors({
@@ -32,7 +32,8 @@ app.use(cors({
   credentials: true // Allow credentials (cookies) to be included in requests
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb' })); // Adjust the limit as needed
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // Adjust the limit as needed
 app.use(cookieParser()); // Use cookie-parser middleware
 
 // Routes
