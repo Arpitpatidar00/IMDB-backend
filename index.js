@@ -32,7 +32,8 @@ app.use(cors({
   credentials: true // Allow credentials (cookies) to be included in requests
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb' })); // Adjust the limit as needed
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // Adjust the limit as needed
 app.use(cookieParser()); // Use cookie-parser middleware
 
 // Routes
