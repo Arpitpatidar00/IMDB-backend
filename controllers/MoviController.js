@@ -51,7 +51,7 @@ export const getTrendingMovies = async (req, res) => {
         },
       },
       { $sort: { "imdb.rating": -1, num_mflix_comments: -1 } },
-      { $limit: 10 },
+      { $limit: 100 },
     ]);
     res.json(trendingMovies);
   } catch (error) {
