@@ -16,8 +16,8 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Define allowed origins
-// const allowedOrigins = ['https://main--clone-amenses-i-m-d-b.netlify.app']; // Add your allowed origins here
-const allowedOrigins = ["http://localhost:3000"]; // Add your allowed origins here
+const allowedOrigins = ['https://main--clone-amenses-i-m-d-b.netlify.app']; // Add your allowed origins here
+// const allowedOrigins = ["http://localhost:3000"]; // Add your allowed origins here
 
 // Configure CORS middleware
 app.use(
