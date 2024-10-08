@@ -255,6 +255,7 @@
 //   }
 // };
 // controllers/authController.js
+
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
@@ -303,14 +304,18 @@ const getStoredOTP = async (email) => {
   }
 };
 
+// Signup Controller
 export const signupUser = async (req, res, next) => {
   const { username, email, password, mobileno, image } = req.body;
 
   try {
-    const userExists = await User.findOne({ email });
+    // Check if the user with the same email or username already exists
+    const userExists = await User.findOne({ 
+      $or: [{ email }, { username }] 
+    });
 
     if (userExists) {
-      return next(new AppError("User already exists", 400));
+      return next(new AppError('User with this email or username already exists', 400));
     }
 
     const user = await User.create({
@@ -332,6 +337,7 @@ export const signupUser = async (req, res, next) => {
     next(error);
   }
 };
+
 
 export const loginUser = async (req, res, next) => {
   const { email, password } = req.body;

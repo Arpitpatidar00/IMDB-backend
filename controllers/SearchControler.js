@@ -255,6 +255,7 @@ export const SearchMoviData = async (req, res) => {
             { cast: { $elemMatch: { $regex: exactMatchPattern } } },        // Exact match for Cast
             { directors: { $elemMatch: { $regex: exactMatchPattern } } },   // Exact match for Directors
             { genres: { $elemMatch: { $regex: exactMatchPattern } } },      // Exact match for Genres
+            { languages: { $elemMatch: { $regex: exactMatchPattern } } }    // Exact match for Languages
           ]
         }
       },
@@ -267,7 +268,8 @@ export const SearchMoviData = async (req, res) => {
               { $map: { input: '$genres', as: 'g', in: { $toLower: '$$g' } } },
               { $map: { input: '$cast', as: 'c', in: { $toLower: '$$c' } } },
               { $map: { input: '$directors', as: 'd', in: { $toLower: '$$d' } } },
-              { $map: { input: '$countries', as: 'co', in: { $toLower: '$$co' } } }
+              { $map: { input: '$countries', as: 'co', in: { $toLower: '$$co' } } },
+              { $map: { input: '$languages', as: 'l', in: { $toLower: '$$l' } } }
             ]
           }
         }
@@ -288,6 +290,7 @@ export const SearchMoviData = async (req, res) => {
               { cast: { $elemMatch: { $regex: fuzzyPattern } } },        // Fuzzy match for Cast
               { directors: { $elemMatch: { $regex: fuzzyPattern } } },   // Fuzzy match for Directors
               { genres: { $elemMatch: { $regex: fuzzyPattern } } },      // Fuzzy match for Genres
+              { languages: { $elemMatch: { $regex: fuzzyPattern } } }    // Fuzzy match for Languages
             ]
           }
         },
@@ -300,7 +303,8 @@ export const SearchMoviData = async (req, res) => {
                 { $map: { input: '$genres', as: 'g', in: { $toLower: '$$g' } } },
                 { $map: { input: '$cast', as: 'c', in: { $toLower: '$$c' } } },
                 { $map: { input: '$directors', as: 'd', in: { $toLower: '$$d' } } },
-                { $map: { input: '$countries', as: 'co', in: { $toLower: '$$co' } } }
+                { $map: { input: '$countries', as: 'co', in: { $toLower: '$$co' } } },
+                { $map: { input: '$languages', as: 'l', in: { $toLower: '$$l' } } }
               ]
             }
           }
@@ -308,7 +312,7 @@ export const SearchMoviData = async (req, res) => {
         { $unwind: '$suggestions' },
         { $group: { _id: '$suggestions', count: { $sum: 1 } } },
         { $sort: { count: -1 } },  // Sort by frequency (optional)
-        { $limit: 20 }  // Limit to top 10 suggestions
+        { $limit: 20 }  // Limit to top 20 suggestions
       ]);
     }
 
@@ -324,4 +328,5 @@ export const SearchMoviData = async (req, res) => {
 };
 
 export default router;
+
 
